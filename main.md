@@ -135,3 +135,4 @@ python3 /NGS-PrimerPlex/NGS_primerplex.py \
     --regions-file /home/primerplex/input/gene_regions.bed
     --threads 20
 ```
+Note: this way it uses only the exons, not the whole thing

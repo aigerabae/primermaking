@@ -1,4 +1,4 @@
-<img width="158" height="17" alt="image" src="https://github.com/user-attachments/assets/7331b734-ba4b-4d9c-bb6e-c8ad01af5419" />At prom@PCA100416:/data/rkalendar/primerplex:
+At prom@PCA100416:/data/rkalendar/primerplex:
 
 Downloading fasta files and twobittofa software and pulling multiplex image:
 ```bash
@@ -115,4 +115,22 @@ sed -i 's/if withVcf=True:/if withVcf==True:/g' /NGS-PrimerPlex/test.py
 
 python3 /NGS-PrimerPlex/test.py -wgref /home/primerplex/indexed_ref_hg38/ucsc.hg38.fa -ref /home/primerplex/combined_ref_hg38/
 # doesn' work because it doesn't like the unlocalized contigs in my fasta files.
+```
+
+Testing with actual genes:
+```bash
+docker run -it --entrypoint 'bash' -v '/data/rkalendar:/home' aakechin/ngs-primerplex:1.3.4
+echo "RHD" > /home/primerplex/input/genelist.txt
+echo "RHCE" >> /home/primerplex/input/genelist.txt
+python3 /NGS-PrimerPlex/getGeneRegions.py \
+    -glf /home/primerplex/input/genelist.txt \
+    -ref /home/primerplex/combined_ref_hg38/ \
+    -wgref /home/primerplex/combined_ref_hg38/ucsc.hg38.fa \
+    -rf home/primerplex/input/gene_regions.bed
+
+
+python3 /NGS-PrimerPlex/NGS-PrimerPlex.py \
+    -ref hg19.fa \
+    -p targets.txt \
+    -o output_folder
 ```
